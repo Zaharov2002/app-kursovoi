@@ -1,0 +1,33 @@
+﻿<Page x:Class="app_kursovoi.AdEditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:app_kursovoi"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdEditPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Название" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text="Год выпуска" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text="Жанр" Grid.Row="2" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text="Страна" Grid.Row="3" HorizontalAlignment="Center"></TextBlock>
+        <TextBox Text="{Binding film1}" Grid.Column="1" Height="30"></TextBox>
+        <TextBox Text="{Binding Year}" Grid.Column="1" Grid.Row="1" Height="30" Width="200" HorizontalAlignment="Left"></TextBox>
+        <ComboBox SelectedItem="{Binding Genre}" Grid.Column="1" Grid.Row="2" Height="30" x:Name="ComboGenres" DisplayMemberPath="Name"></ComboBox>
+        <ComboBox SelectedItem="{Binding Country}" Grid.Column="1" Grid.Row="3" Height="30" x:Name="ComboCountries" DisplayMemberPath="Name"></ComboBox>
+        <Button Content="Сохранить" Grid.ColumnSpan="2" Grid.Row="4" Name="btnSave" Click="btnSave_Click"></Button>
+    </Grid>
+</Page>
