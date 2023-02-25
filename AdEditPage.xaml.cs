@@ -22,9 +22,12 @@ namespace app_kursovoi
     {
         private film _currentfilm = new film();
         
-        public AdEditPage()
+        public AdEditPage(film selectedfilm)
         {
             InitializeComponent();
+            if (selectedfilm != null)
+                _currentfilm = selectedfilm;
+              
             DataContext = _currentfilm;
             ComboGenres.ItemsSource = filmsEntities.GetContext().Genre.ToList();
             ComboCountries.ItemsSource = filmsEntities.GetContext().Country.ToList();

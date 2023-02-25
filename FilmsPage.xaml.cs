@@ -28,22 +28,38 @@ namespace app_kursovoi
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AdEditPage());
+            
         }
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-
+            Manager.MainFrame.Navigate(new AdEditPage((sender as Button).DataContext as film));
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
+            var filmsForRemoving = DGridFilms.SelectedItems.Cast<film>().ToList();
+            if (MessageBox.Show($"Вы точно хотите удалить {filmsForRemoving.Count()} элементов?" , "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question)
+                == MessageBoxResult.Yes)
+            {
+               try
+                {
+                    filmsEntities.GetContext().film.RemoveRange(filmsForRemoving);
+                    filmsEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Данные успешно удалены");
 
+                    DGridFilms.ItemsSource = filmsEntities.GetContext().film.ToList();
+                }
+                catch (Exception ex)
+                 {
+                    MessageBox.Show(ex.Message.ToString());
+                } 
+            }
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AdEditPage());
+            Manager.MainFrame.Navigate(new AdEditPage(null));
         }
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
