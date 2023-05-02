@@ -46,16 +46,6 @@
           <Property Name="HoleCode" Type="int" />
           <Property Name="FilmCode" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <Association Name="FK_film_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
           <End Role="film" Type="Self.film" Multiplicity="*" />
@@ -110,7 +100,6 @@
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hole" EntityType="Self.Hole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_film_Country" Association="Self.FK_film_Country">
             <End Role="Country" EntitySet="Country" />
             <End Role="film" EntitySet="film" />
@@ -139,7 +128,7 @@
           </Key>
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="film" Relationship="Self.FK_film_Country" FromRole="Country" ToRole="film" />
+          <NavigationProperty Name="films" Relationship="Self.FK_film_Country" FromRole="Country" ToRole="film" />
         </EntityType>
         <EntityType Name="film">
           <Key>
@@ -152,7 +141,7 @@
           <Property Name="GenreCode" Type="Int32" />
           <NavigationProperty Name="Country" Relationship="Self.FK_film_Country" FromRole="film" ToRole="Country" />
           <NavigationProperty Name="Genre" Relationship="Self.FK_film_Genre" FromRole="film" ToRole="Genre" />
-          <NavigationProperty Name="Session" Relationship="Self.FK_Session_film" FromRole="film" ToRole="Session" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK_Session_film" FromRole="film" ToRole="Session" />
         </EntityType>
         <EntityType Name="Genre">
           <Key>
@@ -160,7 +149,7 @@
           </Key>
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="film" Relationship="Self.FK_film_Genre" FromRole="Genre" ToRole="film" />
+          <NavigationProperty Name="films" Relationship="Self.FK_film_Genre" FromRole="Genre" ToRole="film" />
         </EntityType>
         <EntityType Name="Hole">
           <Key>
@@ -168,7 +157,7 @@
           </Key>
           <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Session" Relationship="Self.FK_Session_Hole" FromRole="Hole" ToRole="Session" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK_Session_Hole" FromRole="Hole" ToRole="Session" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
@@ -181,16 +170,6 @@
           <Property Name="FilmCode" Type="Int32" />
           <NavigationProperty Name="film" Relationship="Self.FK_Session_film" FromRole="Session" ToRole="film" />
           <NavigationProperty Name="Hole" Relationship="Self.FK_Session_Hole" FromRole="Session" ToRole="Hole" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_film_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
@@ -240,28 +219,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="filmsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Country" EntityType="Self.Country" />
-          <EntitySet Name="film" EntityType="Self.film" />
-          <EntitySet Name="Genre" EntityType="Self.Genre" />
-          <EntitySet Name="Hole" EntityType="Self.Hole" />
-          <EntitySet Name="Session" EntityType="Self.Session" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+        <EntityContainer Name="filmsEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="films" EntityType="Self.film" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="Holes" EntityType="Self.Hole" />
+          <EntitySet Name="Sessions" EntityType="Self.Session" />
           <AssociationSet Name="FK_film_Country" Association="Self.FK_film_Country">
-            <End Role="Country" EntitySet="Country" />
-            <End Role="film" EntitySet="film" />
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="film" EntitySet="films" />
           </AssociationSet>
           <AssociationSet Name="FK_film_Genre" Association="Self.FK_film_Genre">
-            <End Role="Genre" EntitySet="Genre" />
-            <End Role="film" EntitySet="film" />
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="film" EntitySet="films" />
           </AssociationSet>
           <AssociationSet Name="FK_Session_film" Association="Self.FK_Session_film">
-            <End Role="film" EntitySet="film" />
-            <End Role="Session" EntitySet="Session" />
+            <End Role="film" EntitySet="films" />
+            <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
           <AssociationSet Name="FK_Session_Hole" Association="Self.FK_Session_Hole">
-            <End Role="Hole" EntitySet="Hole" />
-            <End Role="Session" EntitySet="Session" />
+            <End Role="Hole" EntitySet="Holes" />
+            <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -269,8 +247,8 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище filmsModelContainer" CdmEntityContainer="filmsEntities">
-          <EntitySetMapping Name="Country">
+        <EntityContainerMapping StorageEntityContainer="Хранилище filmsModelContainer" CdmEntityContainer="filmsEntities1">
+          <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="filmsModel.Country">
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -278,7 +256,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="film">
+          <EntitySetMapping Name="films">
             <EntityTypeMapping TypeName="filmsModel.film">
               <MappingFragment StoreEntitySet="film">
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -289,7 +267,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Genre">
+          <EntitySetMapping Name="Genres">
             <EntityTypeMapping TypeName="filmsModel.Genre">
               <MappingFragment StoreEntitySet="Genre">
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -297,7 +275,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Hole">
+          <EntitySetMapping Name="Holes">
             <EntityTypeMapping TypeName="filmsModel.Hole">
               <MappingFragment StoreEntitySet="Hole">
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -305,7 +283,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Session">
+          <EntitySetMapping Name="Sessions">
             <EntityTypeMapping TypeName="filmsModel.Session">
               <MappingFragment StoreEntitySet="Session">
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -313,17 +291,6 @@
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="HoleCode" ColumnName="HoleCode" />
                 <ScalarProperty Name="FilmCode" ColumnName="FilmCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="filmsModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -341,7 +308,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />

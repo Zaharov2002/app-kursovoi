@@ -17,7 +17,7 @@ namespace app_kursovoi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public film()
         {
-            this.Session = new HashSet<Session>();
+            this.Sessions = new HashSet<Session>();
         }
     
         public int id { get; set; }
@@ -29,6 +29,6 @@ namespace app_kursovoi
         public virtual Country Country { get; set; }
         public virtual Genre Genre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Session> Session { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }

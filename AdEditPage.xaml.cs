@@ -29,8 +29,8 @@ namespace app_kursovoi
                 _currentfilm = selectedfilm;
               
             DataContext = _currentfilm;
-            ComboGenres.ItemsSource = filmsEntities.GetContext().Genre.ToList();
-            ComboCountries.ItemsSource = filmsEntities.GetContext().Country.ToList();
+            ComboGenres.ItemsSource = filmsEntities1.GetContext().Genre.ToList();
+            ComboCountries.ItemsSource = filmsEntities1.GetContext().Country.ToList();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -49,10 +49,10 @@ namespace app_kursovoi
                 return;
             }
             if (_currentfilm.id == 0)
-                filmsEntities.GetContext().film.Add(_currentfilm);
+                filmsEntities1.GetContext().film.Add(_currentfilm);
             try
             {
-                filmsEntities.GetContext().SaveChanges();
+                filmsEntities1.GetContext().SaveChanges();
                 MessageBox.Show("Инфрмация сохранена");
                 Manager.MainFrame.GoBack();
             }

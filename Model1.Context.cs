@@ -13,19 +13,11 @@ namespace app_kursovoi
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class filmsEntities : DbContext
+    public partial class filmsEntities1 : DbContext
     {
-        private static filmsEntities _context;
-
-        public filmsEntities()
-            : base("name=filmsEntities")
+        public filmsEntities1()
+            : base("name=filmsEntities1")
         {
-        }
-        public static filmsEntities GetContext()
-        {
-            if (_context == null)
-                _context = new filmsEntities();
-            return _context;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -33,11 +25,10 @@ namespace app_kursovoi
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Country> Country { get; set; }
-        public virtual DbSet<film> film { get; set; }
-        public virtual DbSet<Genre> Genre { get; set; }
-        public virtual DbSet<Hole> Hole { get; set; }
-        public virtual DbSet<Session> Session { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<film> films { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<Hole> Holes { get; set; }
+        public virtual DbSet<Session> Sessions { get; set; }
     }
 }

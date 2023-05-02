@@ -17,13 +17,13 @@ namespace app_kursovoi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Genre()
         {
-            this.film = new HashSet<film>();
+            this.films = new HashSet<film>();
         }
     
         public int Code { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<film> film { get; set; }
+        public virtual ICollection<film> films { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace app_kursovoi
         public FilmsPage()
         {
             InitializeComponent();
-            DGridFilms.ItemsSource = filmsEntities.GetContext().film.ToList();
+            DGridFilms.ItemsSource = filmsEntities1.GetContext().film.ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -44,11 +44,11 @@ namespace app_kursovoi
             {
                try
                 {
-                    filmsEntities.GetContext().film.RemoveRange(filmsForRemoving);
-                    filmsEntities.GetContext().SaveChanges();
+                    filmsEntities1.GetContext().film.RemoveRange(filmsForRemoving);
+                    filmsEntities1.GetContext().SaveChanges();
                     MessageBox.Show("Данные успешно удалены");
 
-                    DGridFilms.ItemsSource = filmsEntities.GetContext().film.ToList();
+                    DGridFilms.ItemsSource = filmsEntities1.GetContext().film.ToList();
                 }
                 catch (Exception ex)
                  {
@@ -64,8 +64,8 @@ namespace app_kursovoi
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            filmsEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-            DGridFilms.ItemsSource = filmsEntities.GetContext().film.ToList();
+            filmsEntities1.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+            DGridFilms.ItemsSource = filmsEntities1.GetContext().film.ToList();
         }
     }
 }

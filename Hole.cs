@@ -17,13 +17,13 @@ namespace app_kursovoi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Hole()
         {
-            this.Session = new HashSet<Session>();
+            this.Sessions = new HashSet<Session>();
         }
     
         public int Code { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Session> Session { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }
